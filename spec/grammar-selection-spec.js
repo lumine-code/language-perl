@@ -14,7 +14,7 @@ describe("Perl grammar selection", () => {
     const grammar = atom.grammars.selectGrammar("run.pl", "#!/usr/bin/env perl\nprint 1;\n");
 
     expect(grammar.scopeName).toBe("source.perl");
-    expect(grammar.constructor.name).toBe("WASMTreeSitterGrammar");
+    expect(grammar.constructor.name).toBe("TreeSitterGrammar");
   });
 
   it("does not claim a perl6 shebang for Perl 5", () => {

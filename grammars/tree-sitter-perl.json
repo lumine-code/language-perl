@@ -1,7 +1,7 @@
 {
   "name": "PERL",
   "scopeName": "source.perl",
-  "type": "modern-tree-sitter",
+  "type": "tree-sitter",
   "parser": "tree-sitter-perl",
   "injectionRegex": "^perl$",
   // Matches the TextMate grammar's shebang rule, which would otherwise win by
