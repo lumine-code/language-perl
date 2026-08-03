@@ -8,6 +8,10 @@ Perl language support.
 - **Syntax highlighting**: full grammar coverage for Perl and Perl 6 files.
 - **Snippets**: shortcuts for common Perl constructs.
 
+## Installation
+
+To install `language-perl` search for _language-perl_ in the Install pane of the Lumine settings or run `lumine --install lumine-code/language-perl`.
+
 ## Contributing
 
 Got ideas to make this package better, found a bug, or want to help add new features? Just drop your thoughts on GitHub. Any feedback is welcome!
