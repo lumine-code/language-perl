@@ -4,6 +4,10 @@
   "type": "modern-tree-sitter",
   "parser": "tree-sitter-perl",
   "injectionRegex": "^perl$",
+  // Matches the TextMate grammar's shebang rule, which would otherwise win by
+  // 0.5 against the 0.1 that prefers Tree-sitter. `\b` after `perl` is what
+  // keeps a `perl6` shebang out; that belongs to the Perl 6 grammar.
+  "firstLineRegex": ["^#!.*\\bperl\\b", "vim\\b.*\\bset\\b.*\\b(filetype|ft|syntax)=perl"],
   "fileTypes": ["pl", "PL", "pm", "pod", "psgi", "t"],
   "comments": {
     "start": "# "
