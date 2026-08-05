@@ -17,6 +17,12 @@
   },
   "repository": "https://github.com/lumine-code/language-perl",
   "license": "MIT",
+  "files": [
+    "grammars",
+    "settings",
+    "snippets",
+    "spec"
+  ],
   "bugs": {
     "url": "https://github.com/lumine-code/language-perl/issues"
   },
