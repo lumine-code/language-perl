@@ -5,10 +5,10 @@ describe("Perl 6 grammar", () => {
     // This suite tests the TextMate grammar. Once the package also ships a
     // Tree-sitter one, grammarForScopeName returns that instead under the
     // default setting, and every tokenizeLine assertion below would break.
-    atom.config.set("language.useTreeSitterParsers", false);
-    waitsForPromise(() => atom.packages.activatePackage("language-perl"));
+    lumine.config.set("language.useTreeSitterParsers", false);
+    waitsForPromise(() => lumine.packages.activatePackage("language-perl"));
 
-    runs(() => (grammar = atom.grammars.grammarForScopeName("source.perl6")));
+    runs(() => (grammar = lumine.grammars.grammarForScopeName("source.perl6")));
   });
 
   it("parses the grammar", () => {

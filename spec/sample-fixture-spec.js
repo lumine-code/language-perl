@@ -7,12 +7,12 @@ const path = require("path");
 
 describe("Perl sample fixtures", () => {
   beforeEach(async () => {
-    await atom.packages.activatePackage("language-perl");
-    atom.config.set("language.useTreeSitterParsers", true);
+    await lumine.packages.activatePackage("language-perl");
+    lumine.config.set("language.useTreeSitterParsers", true);
   });
 
   it("parses sample.pl without error", async () => {
-    const editor = await atom.workspace.open(path.join(__dirname, "fixtures", "sample.pl"));
+    const editor = await lumine.workspace.open(path.join(__dirname, "fixtures", "sample.pl"));
     const languageMode = editor.getBuffer().getLanguageMode();
     await languageMode.ready;
 
