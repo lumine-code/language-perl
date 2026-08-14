@@ -10,7 +10,7 @@ Perl language support.
 
 ## Installation
 
-To install `language-perl` search for _language-perl_ in the Install pane of the Lumine settings or run `lumine --install lumine-code/language-perl`.
+To install `language-perl` search for it in the Install pane of the Lumine settings, or run the command `lumine --install lumine-code/language-perl`.
 
 ## Contributing
 
