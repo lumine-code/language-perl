@@ -1,6 +1,6 @@
 {
   ".source.perl": {
-    "language": {
+    "editor": {
       "foldEndPattern": "(\\*/|^\\s*(\\}|\\]|\\)))",
       "increaseIndentPattern": "^.*\\{\\}?\\s*$",
       "decreaseIndentPattern": "^\\s*\\}",
@@ -12,7 +12,7 @@
     }
   },
   ".source.perl6": {
-    "language": {
+    "editor": {
       "foldEndPattern": "(\\*/|^\\s*(\\}|\\]|\\)))",
       "increaseIndentPattern": "^.*\\{\\}?\\s*$",
       "decreaseIndentPattern": "^\\s*\\}",

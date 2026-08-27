@@ -7,7 +7,7 @@
 describe("Perl grammar selection", () => {
   beforeEach(async () => {
     await lumine.packages.activatePackage("language-perl");
-    lumine.config.set("language.useTreeSitterParsers", true);
+    lumine.config.set("editor.useTreeSitterParsers", true);
   });
 
   it("prefers the Tree-sitter grammar for a script with a perl shebang", () => {
@@ -26,7 +26,7 @@ describe("Perl grammar selection", () => {
   });
 
   it("still honours the TextMate preference", () => {
-    lumine.config.set("language.useTreeSitterParsers", false);
+    lumine.config.set("editor.useTreeSitterParsers", false);
 
     const grammar = lumine.grammars.selectGrammar("run.pl", "#!/usr/bin/env perl\nprint 1;\n");
 
