@@ -1,4 +1,3 @@
-(comment)+ @fold
 (pod) @fold
 (heredoc_content) @fold
 
