@@ -12,7 +12,7 @@
   },
   "treeSitter": {
     "parserSource": "github:tree-sitter-perl/tree-sitter-perl#0390ac6f4e26f5805c9d7d9b950685436faa6359",
-    "wasmBuildTool": "tree-sitter-cli#v0.26.13",
+    "wasmBuildTool": "tree-sitter-cli#v0.27.0",
     "grammar": "perl.wasm",
     "highlightsQuery": "perl-highlights.scm",
     "foldsQuery": "perl-folds.scm"
