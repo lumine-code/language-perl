@@ -4,8 +4,8 @@ Perl language support.
 
 ## Features
 
-- **Grammars**: provides Tree-sitter grammars built from [tree-sitter-perl](https://github.com/tree-sitter-perl/tree-sitter-perl) and TextMate grammars derived from [atom/language-perl](https://github.com/atom/language-perl).
-- **Syntax highlighting**: full grammar coverage for Perl and Perl 6 files.
+- **Grammars**: provides a Tree-sitter grammar built from [tree-sitter-perl](https://github.com/tree-sitter-perl/tree-sitter-perl).
+- **Syntax highlighting**: full grammar coverage for Perl files.
 - **Snippets**: shortcuts for common Perl constructs.
 
 ## Installation

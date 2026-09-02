@@ -1,6 +1,5 @@
 describe("Perl Tree-sitter grammar", () => {
   beforeEach(async () => {
-    lumine.config.set("editor.useTreeSitterParsers", true);
     await lumine.packages.activatePackage("language-perl");
   });
 

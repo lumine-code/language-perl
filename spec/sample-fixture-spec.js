@@ -8,7 +8,6 @@ const path = require("path");
 describe("Perl sample fixtures", () => {
   beforeEach(async () => {
     await lumine.packages.activatePackage("language-perl");
-    lumine.config.set("editor.useTreeSitterParsers", true);
   });
 
   it("parses sample.pl without error", async () => {

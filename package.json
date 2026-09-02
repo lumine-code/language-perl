@@ -7,9 +7,8 @@
     "pl",
     "pm",
     "pod",
-    "raku",
-    "p6",
-    "psgi"
+    "psgi",
+    "tree-sitter"
   ],
   "engines": {
     "lumine": "^1.0.0",

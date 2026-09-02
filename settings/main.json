@@ -1,9 +1,6 @@
 {
   ".source.perl": {
     "editor": {
-      "foldEndPattern": "(\\*/|^\\s*(\\}|\\]|\\)))",
-      "increaseIndentPattern": "^.*\\{\\}?\\s*$",
-      "decreaseIndentPattern": "^\\s*\\}",
       "commentStart": "# ",
       "commentDelimiters": {
         "line": "#"
@@ -13,9 +10,6 @@
   },
   ".source.perl6": {
     "editor": {
-      "foldEndPattern": "(\\*/|^\\s*(\\}|\\]|\\)))",
-      "increaseIndentPattern": "^.*\\{\\}?\\s*$",
-      "decreaseIndentPattern": "^\\s*\\}",
       "commentStart": "# ",
       "commentDelimiters": {
         "line": "#"
