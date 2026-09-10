@@ -1,5 +1,5 @@
 ((source_file . (comment) @keyword.control.directive.perl)
-  )
+  (#set! adjust.endBeforeFirstMatchOf "\\r?$"))
 
 [ "use" "no" "require" ] @keyword.control.import.perl
 
@@ -33,7 +33,8 @@
 (phaser_statement phase: _ @keyword.control.phaser.perl)
 (class_phaser_statement phase: _ @keyword.control.phaser.perl)
 
-(_ operator: _ @keyword.operator.perl)
+((_) @keyword.operator.perl
+  (#is? test.field operator))
 "\\" @keyword.operator.perl
 
 [
@@ -70,7 +71,8 @@
 
 [(escape_sequence) (escaped_delimiter)] @constant.character.escape.perl
 
-(_ modifiers: _ @constant.character.escape.perl)
+((_) @constant.character.escape.perl
+  (#is? test.field modifiers))
 [
  (quoted_regexp)
  (match_regexp)
@@ -127,19 +129,20 @@
 (glob_slot_expression "*" @variable.language.perl)
 (scalar_deref_expression [ "$" "*"] @variable.other.scalar.perl)
 
-; gotta be SUPER GENERIC so we can hit up string interp
-(_
-  [
-   array: (_) @variable.other.array.perl
-   hash: (_) @variable.other.hash.perl
-  ])
+; Gotta be generic so we can hit up string interpolation, but keep each query
+; rooted on the field value instead of scanning every possible parent.
+((_) @variable.other.array.perl
+  (#is? test.field array))
+((_) @variable.other.hash.perl
+  (#is? test.field hash))
 (array_deref_expression [ "@" "*"] @variable.other.array.perl)
 (arraylen_deref_expression [ "$#" "*"] @variable.other.array.perl)
 (hash_deref_expression [ "%" "*"] @variable.other.hash.perl)
 (array_element_expression array:(_) @variable.other.array.perl)
 (slice_expression array:(_) @variable.other.array.perl)
 
-(comment) @comment.line.perl
+((comment) @comment.line.perl
+  (#set! adjust.endBeforeFirstMatchOf "\\r?$"))
 
 "=>" @punctuation.separator.key-value.perl
 "," @punctuation.separator.comma.perl
@@ -164,7 +167,5 @@
     "{" @punctuation.definition.variable.begin.perl
     "}" @punctuation.definition.variable.end.perl))
 
-((_
-    (autoquoted_bareword)
-    (bareword) @constant.other.perl)
-)
+((bareword) @constant.other.perl
+  (#is? test.typeAt "previousNamedSibling autoquoted_bareword"))
