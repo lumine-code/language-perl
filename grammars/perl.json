@@ -3,7 +3,7 @@
   "scopeName": "source.perl",
   "type": "tree-sitter",
   "parser": "tree-sitter-perl",
-  "injectionNames": ["perl"],
+  "injectionNames": ["perl", "cperl"],
   // `\b` after `perl` deliberately keeps unsupported Raku/perl6 shebangs out.
   "firstLineRegex": ["^#!.*\\bperl\\b", "vim\\b.*\\bset\\b.*\\b(filetype|ft|syntax)=perl"],
   "fileTypes": ["pl", "PL", "pm", "pod", "psgi", "t"],
