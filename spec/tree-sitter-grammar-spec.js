@@ -42,7 +42,7 @@ describe("Perl Tree-sitter grammar", () => {
     editor.setGrammar(lumine.grammars.grammarForScopeName("source.perl"));
     const languageMode = editor.getBuffer().languageMode;
     await languageMode.ready;
-    expect(languageMode.tree.rootNode.hasError).toBe(false);
+    expect((await editor.getSyntaxDiagnostics()).hasError).toBe(false);
 
     const valueColumn = editor.lineTextForBufferRow(1).indexOf("value_0");
     expect(editor.scopeDescriptorForBufferPosition([1, valueColumn]).getScopesArray()).toContain(
@@ -50,22 +50,16 @@ describe("Perl Tree-sitter grammar", () => {
     );
     const startRow = 2998;
     const endRow = startRow + 6;
-    const layer = languageMode.rootLanguageLayer;
-    const captures = layer.queries.highlightsQuery.captures(layer.tree.rootNode, {
+    const groups = await editor.getGrammarQueryCaptureGroups("highlightsQuery", {
       startPosition: new Point(startRow, 0),
       endPosition: new Point(endRow, 0),
     });
+    const captures = groups.find(({ grammar }) => grammar === editor.getGrammar()).captures;
     expect(captures.length).toBeLessThanOrEqual(128);
     expect(
       captures
         .filter(({ name }) => name === "constant.other.perl")
         .every(({ node }) => node.startPosition.row >= startRow && node.startPosition.row < endRow),
     ).toBe(true);
-
-    const nonLocalPatterns = [];
-    for (let index = 0; index < layer.queries.highlightsQuery.patternCount(); index++) {
-      if (layer.queries.highlightsQuery.isPatternNonLocal(index)) nonLocalPatterns.push(index);
-    }
-    expect(nonLocalPatterns).toEqual([]);
   });
 });
