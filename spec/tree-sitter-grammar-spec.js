@@ -42,7 +42,9 @@ describe("Perl Tree-sitter grammar", () => {
     editor.setGrammar(lumine.grammars.grammarForScopeName("source.perl"));
     const languageMode = editor.getBuffer().languageMode;
     await languageMode.ready;
-    expect((await editor.getSyntaxDiagnostics()).hasError).toBe(false);
+    expect(editor.getSyntaxNodeAtBufferPosition([0, 0], (node) => !node.parent).hasError).toBe(
+      false,
+    );
 
     const valueColumn = editor.lineTextForBufferRow(1).indexOf("value_0");
     expect(editor.scopeDescriptorForBufferPosition([1, valueColumn]).getScopesArray()).toContain(
@@ -50,11 +52,12 @@ describe("Perl Tree-sitter grammar", () => {
     );
     const startRow = 2998;
     const endRow = startRow + 6;
-    const groups = await editor.getGrammarQueryCaptureGroups("highlightsQuery", {
+    const capturesQuery = await editor.getGrammar().getQuery("highlightsQuery");
+    const queryRoot = editor.getSyntaxNodeAtBufferPosition([0, 0], (node) => !node.parent);
+    const captures = capturesQuery.captures(queryRoot, {
       startPosition: new Point(startRow, 0),
       endPosition: new Point(endRow, 0),
     });
-    const captures = groups.find(({ grammar }) => grammar === editor.getGrammar()).captures;
     expect(captures.length).toBeLessThanOrEqual(128);
     expect(
       captures

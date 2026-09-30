@@ -16,6 +16,8 @@ describe("Perl sample fixtures", () => {
     await languageMode.ready;
 
     expect(editor.getGrammar().scopeName).toBe("source.perl");
-    expect((await editor.getSyntaxDiagnostics()).hasError).toBe(false);
+    expect(editor.getSyntaxNodeAtBufferPosition([0, 0], (node) => !node.parent).hasError).toBe(
+      false,
+    );
   });
 });
