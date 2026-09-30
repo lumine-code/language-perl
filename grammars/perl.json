@@ -5,7 +5,12 @@
   "parser": "tree-sitter-perl",
   "injectionNames": ["perl", "cperl"],
   // `\b` after `perl` deliberately keeps unsupported Raku/perl6 shebangs out.
-  "firstLineRegex": ["^#!.*\\bperl\\b", "vim\\b.*\\bset\\b.*\\b(filetype|ft|syntax)=perl"],
+  // Stop at the first Vim and set tokens instead of backtracking over them.
+  // \x0a keeps existing shebang prefix line counts unchanged.
+  "firstLineRegex": [
+    "^#!.*\\bperl\\b",
+    "(?:^|\\x0a)(?:(?!vim\\b).)*vim\\b(?:(?!\\bset\\b).)*\\bset\\b.*\\b(filetype|ft|syntax)=perl"
+  ],
   "fileTypes": ["pl", "PL", "pm", "pod", "psgi", "t"],
   "comments": {
     "start": "# "
