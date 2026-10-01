@@ -97,6 +97,16 @@
 
 (relational_expression operator: "isa" right: (bareword) @support.type.perl)
 
+; Moo/Moose attribute declarations use a function call with a fat-comma list.
+; Keep ordinary has(...) calls, method names and hash keys as their own syntax.
+((ambiguous_function_call_expression
+  function: (function) @storage.modifier.perl
+  arguments: (list_expression
+    . [(autoquoted_bareword) (string_literal) (interpolated_string_literal) (quoted_word_list)]
+    "=>"))
+  (#eq? @storage.modifier.perl "has")
+  (#set! capture.final true))
+
 (function) @entity.name.function.perl
 
 (function_call_expression (function) @support.other.function.perl)

@@ -13,6 +13,53 @@ describe("Perl Tree-sitter grammar", () => {
 
   afterEach(() => editor?.destroy());
 
+  async function openPerl(text) {
+    editor = await lumine.workspace.open("classes.pl");
+    editor.setText(text);
+    editor.setGrammar(lumine.grammars.grammarForScopeName("source.perl"));
+    await editor.getBuffer().languageMode.ready;
+    expect(editor.getSyntaxNodeAtBufferPosition([0, 0], (node) => !node.parent).hasError).toBe(
+      false,
+    );
+  }
+
+  function scopesFor(row, word) {
+    const column = editor.lineTextForBufferRow(row).indexOf(word);
+    expect(column).toBeGreaterThanOrEqual(0);
+    return editor.scopeDescriptorForBufferPosition([row, column]).getScopesArray();
+  }
+
+  it("highlights native classes, fields and methods", async () => {
+    await openPerl("class Foo {\n  field $bar;\n  method baz { return $bar; }\n}\n");
+
+    expect(scopesFor(0, "class")).toContain("keyword.control.import.perl");
+    expect(scopesFor(0, "Foo")).toContain("support.type.perl");
+    expect(scopesFor(1, "field")).toContain("keyword.control.perl");
+    expect(scopesFor(2, "method")).toContain("storage.type.function.perl");
+    expect(scopesFor(2, "baz")).toContain("entity.name.function.method.perl");
+  });
+
+  it("highlights Moo and Moose attribute declarations", async () => {
+    await openPerl(
+      'package Foo;\nuse Moo;\nhas bar => (is => "ro");\nhas "baz" => (is => "rw");\nhas qw(one two) => (is => "ro");\n',
+    );
+
+    for (const row of [2, 3, 4]) {
+      expect(scopesFor(row, "has")).toContain("storage.modifier.perl");
+      expect(scopesFor(row, "has")).not.toContain("entity.name.function.perl");
+    }
+  });
+
+  it("does not treat ordinary has calls, methods, hash keys or strings as declarations", async () => {
+    await openPerl('has(bar);\n$obj->has("bar");\nmy %options = (has => 1);\nmy $word = "has";\n');
+
+    for (const row of [0, 1, 2, 3]) {
+      expect(scopesFor(row, "has")).not.toContain("storage.modifier.perl");
+    }
+    expect(scopesFor(0, "has")).toContain("entity.name.function.perl");
+    expect(scopesFor(1, "has")).toContain("support.other.function.method.perl");
+  });
+
   it("does not treat runs of line comments as folds", async () => {
     editor = await lumine.workspace.open("comments.pl");
     editor.setText("# one\n# two\n# three\nmy $value = 1;\n");
