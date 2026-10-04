@@ -1,0 +1,32 @@
+{
+  "source.perl": {
+    "text": "package Demo;\nsub greet { return $_[0]; }\nsub declared;\nclass Widget {\n  method render { return 1; }\n}\nmy $count = 1;\ngreet($count);\n# sub Phantom {}\n",
+    "symbols": [
+      {
+        "name": "Demo",
+        "tag": "module"
+      },
+      {
+        "name": "greet",
+        "tag": "function"
+      },
+      {
+        "name": "declared",
+        "tag": "function"
+      },
+      {
+        "name": "Widget",
+        "tag": "class"
+      },
+      {
+        "name": "render",
+        "tag": "method"
+      },
+      {
+        "name": "$count",
+        "tag": "variable"
+      }
+    ],
+    "absent": ["Phantom"]
+  }
+}

@@ -5,6 +5,7 @@ Perl language support.
 ## Features
 
 - **Grammars**: provides a Tree-sitter grammar built from [tree-sitter-perl](https://github.com/tree-sitter-perl/tree-sitter-perl).
+- **Symbols**: packages, classes, subroutines, methods and declared variables.
 - **Syntax highlighting**: full grammar coverage for Perl files.
 - **Snippets**: shortcuts for common Perl constructs.
 
