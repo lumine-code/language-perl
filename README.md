@@ -2,6 +2,8 @@
 
 Perl language support.
 
+Fork of [pulsar-edit/pulsar](https://github.com/pulsar-edit/pulsar) (`packages/language-perl`).
+
 ## Features
 
 - **Grammars**: provides a Tree-sitter grammar built from [tree-sitter-perl](https://github.com/tree-sitter-perl/tree-sitter-perl).
