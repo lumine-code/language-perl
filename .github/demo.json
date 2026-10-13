@@ -1,0 +1,16 @@
+{
+  "title": "language-perl",
+  "description": "PERL syntax highlighting in the editor.",
+  "recordedOn": "2026-10-13",
+  "sourceRevision": "100ba22c3a24db0b4b4b23f14fbb31fb224e15c6",
+  "mode": "normal",
+  "fontSettings": "default",
+  "images": [
+    {
+      "file": "demo.png",
+      "label": "PERL syntax highlighting at the default editor font size.",
+      "width": 1100,
+      "height": 820
+    }
+  ]
+}
