@@ -1,16 +1,61 @@
 {
   "title": "language-perl",
-  "description": "PERL syntax highlighting in the editor.",
-  "recordedOn": "2026-10-13",
-  "sourceRevision": "100ba22c3a24db0b4b4b23f14fbb31fb224e15c6",
+  "description": "PERL syntax highlighting at the default editor font size.",
+  "recordedOn": "2026-10-14",
+  "sourceRevision": "5db7771ffaee1fc00e9f65139520316d46a2ab48",
+  "themeSourceRevision": "7fbd047a87ecf1367c896b19ff270cdc28d319f7",
   "mode": "normal",
   "fontSettings": "default",
+  "scenario": "demo.js",
+  "recipeHash": "c0dbbf7984f6288fd36a8c08f4f60622b512a0562adfb1d6be2cfc3a7a8ad828",
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "electron": "44.7.0",
+    "chrome": "152.0.7977.130",
+    "devicePixelRatio": 1,
+    "locale": "en-GB",
+    "fontFamily": "Fira Code, Menlo, DejaVu Sans Mono, Consolas, monospace",
+    "fontSize": 14,
+    "themes": ["one-day-syntax", "one-day-ui"]
+  },
+  "viewport": { "width": 1100, "height": 820 },
+  "cornerRadius": 10,
+  "sources": {
+    "editor": {
+      "revision": "d0b1751fffac65f10a405545e5f01cf7ad05c0bb",
+      "dirty": false,
+      "workingTreeHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "package": {
+      "revision": "5db7771ffaee1fc00e9f65139520316d46a2ab48",
+      "dirty": false,
+      "workingTreeHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "language-perl": {
+      "revision": "5db7771ffaee1fc00e9f65139520316d46a2ab48",
+      "dirty": false,
+      "workingTreeHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "one-theme": {
+      "revision": "7fbd047a87ecf1367c896b19ff270cdc28d319f7",
+      "dirty": false,
+      "workingTreeHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    }
+  },
+  "fixtures": [
+    {
+      "file": "example.pl",
+      "sha256": "bf674930eed9ab0e5fc7b4b54d36b973bcab295c1330140c316960cab1521d10"
+    }
+  ],
   "images": [
     {
       "file": "demo.png",
       "label": "PERL syntax highlighting at the default editor font size.",
       "width": 1100,
-      "height": 820
+      "height": 820,
+      "sha256": "77f43a1576ba9840ac8a27d2d079c5fe262a3a28503c09f91b1d02b82bb44c70"
     }
   ]
 }
