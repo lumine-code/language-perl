@@ -21,4 +21,26 @@ describe("Perl parenthesized calls", () => {
       "hash_element_expression",
     );
   });
+
+  for (const [name, text] of [
+    ["dash-prefixed autoquoted keys", "$h{-field}; $h{-my}; $h{-q};\n"],
+    ["comments in punctuation variables", "${- # why\n};\n"],
+    ["quote-like equals delimiters at column zero", "my $q = q\n=x=;\nmy $after = 1;\n"],
+    [
+      "braced regex backreferences and character properties",
+      "my $re = qr{(a)\\g{-1}\\p{L}};\nmy $after = 1;\n",
+    ],
+    ["escaped nested strings in interpolated code", 'my $s = "@{[ f(\\"$y\\") ]}";\n'],
+  ]) {
+    it(`parses ${name} and preserves scanner state through edits`, async () => {
+      editor.setText(text);
+      await editor.languageMode.ready;
+      expect(editor.languageMode.tree.rootNode.hasError).toBe(false);
+      editor.getBuffer().append("my $tail = 2;\n");
+      await editor.languageMode.atTransactionEnd();
+      const root = editor.languageMode.tree.rootNode;
+      expect(root.hasError).toBe(false);
+      expect(root.descendantsOfType("assignment_expression").at(-1).text).toBe("my $tail = 2");
+    });
+  }
 });
