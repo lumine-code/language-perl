@@ -44,7 +44,7 @@
 ] @keyword.operator.word.perl
 
 (eof_marker) @keyword.control.directive.perl
-(data_section) @comment.line.perl
+(data_section) @comment.block.perl
 
 (pod) @markup.other.perl
 
