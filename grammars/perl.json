@@ -21,6 +21,7 @@
     "grammar": "perl.wasm",
     "tagsQuery": "perl-tags.scm",
     "highlightsQuery": "perl-highlights.scm",
-    "foldsQuery": "perl-folds.scm"
+    "foldsQuery": "perl-folds.scm",
+    "indentsQuery": "perl-indents.scm"
   }
 }
