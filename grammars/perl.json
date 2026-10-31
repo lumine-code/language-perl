@@ -8,8 +8,8 @@
   // Stop at the first Vim and set tokens instead of backtracking over them.
   // \x0a keeps existing shebang prefix line counts unchanged.
   "firstLineRegex": [
-    "^#!.*\\bperl\\b",
-    "(?:^|\\x0a)(?:(?!vim\\b).)*vim\\b(?:(?!\\bset\\b).)*\\bset\\b.*\\b(filetype|ft|syntax)=perl"
+    "^#![ \\t]*(?:(?:[^\\s]+[\\\\/])?env(?:\\.exe)?[ \\t]+(?:-S[ \\t]+)?(?:[^\\s]+[\\\\/])?|(?:[^\\s]+[\\\\/])?)perl(?:\\.exe)?(?=[ \\t\\r\\n]|$)",
+    "(?:^|\\x0a)(?:(?!vim\\b).)*vim\\b(?:(?!\\bset\\b).)*\\bset\\b.*\\b(filetype|ft|syntax)=perl(?![\\w.-])"
   ],
   "fileTypes": ["pl", "PL", "pm", "pod", "psgi", "t"],
   "comments": {
