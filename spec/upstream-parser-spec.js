@@ -31,6 +31,8 @@ describe("Perl parenthesized calls", () => {
       "my $re = qr{(a)\\g{-1}\\p{L}};\nmy $after = 1;\n",
     ],
     ["escaped nested strings in interpolated code", 'my $s = "@{[ f(\\"$y\\") ]}";\n'],
+    ["literal arrows after interpolation", 'my $s = "a $h{A}->B! $x->\\n";\n'],
+    ["line-initial equals inside a string", 'print "\\n\n=head1 not pod\n";\n'],
   ]) {
     it(`parses ${name} and preserves scanner state through edits`, async () => {
       editor.setText(text);
