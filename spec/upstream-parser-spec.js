@@ -22,6 +22,54 @@ describe("Perl parenthesized calls", () => {
     );
   });
 
+  it("parses interpolated subscripts when their opener is also the quote delimiter", async () => {
+    editor.setText("qq{$h{a}};\nqq[$a[0]];\nqq{@h{a}};\nqq{$h{$k}{x} {y}};\n");
+    expect(await editor.whenGrammarSettled()).toBe(true);
+    const root = editor.getSyntaxNodeAtBufferPosition([0, 0], (node) => !node.parent);
+    expect(root.hasError).toBe(false);
+    expect(root.descendantsOfType("hash_element_expression").map((node) => node.text)).toEqual([
+      "$h{a}",
+      "$h{$k}{x}",
+      "$h{$k}",
+    ]);
+    expect(root.descendantsOfType("array_element_expression")[0].text).toBe("$a[0]");
+    expect(root.descendantsOfType("slice_expression")[0].text).toBe("@h{a}");
+    editor.getBuffer().append("my $tail = 2;\n");
+    expect(await editor.whenGrammarSettled()).toBe(true);
+    expect(editor.getSyntaxNodeAtBufferPosition([0, 0], (node) => !node.parent).hasError).toBe(
+      false,
+    );
+  });
+
+  it("leaves literal and whitespace-separated quote brackets as string content", async () => {
+    editor.setText('qq{[{"a":1}]};\nqq{\\n{x}};\nqq{$a {x}};\n');
+    expect(await editor.whenGrammarSettled()).toBe(true);
+    const root = editor.getSyntaxNodeAtBufferPosition([0, 0], (node) => !node.parent);
+    expect(root.hasError).toBe(false);
+    expect(root.descendantsOfType("hash_element_expression")).toEqual([]);
+    expect(root.descendantsOfType("array_element_expression")).toEqual([]);
+    expect(root.descendantsOfType("scalar").map((node) => node.text)).toEqual(["$a"]);
+  });
+
+  it("scopes only prototype parentheses, including an empty prototype", async () => {
+    editor.setText("sub empty ();\nsub filled ($$);\n");
+    expect(await editor.whenGrammarSettled()).toBe(true);
+    const scopes = (row, column) =>
+      editor.scopeDescriptorForBufferPosition([row, column]).getScopesArray();
+    for (const row of [0, 1]) {
+      expect(scopes(row, 10 + row)).toContain(
+        "punctuation.definition.expression.begin.bracket.round.perl",
+      );
+      expect(scopes(row, row === 0 ? 11 : 14)).toContain(
+        "punctuation.definition.expression.end.bracket.round.perl",
+      );
+    }
+    expect(scopes(1, 12)).not.toContain(
+      "punctuation.definition.expression.begin.bracket.round.perl",
+    );
+    expect(scopes(1, 13)).not.toContain("punctuation.definition.expression.end.bracket.round.perl");
+  });
+
   for (const [name, text] of [
     ["dash-prefixed autoquoted keys", "$h{-field}; $h{-my}; $h{-q};\n"],
     ["comments in punctuation variables", "${- # why\n};\n"],

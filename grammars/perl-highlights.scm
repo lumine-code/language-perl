@@ -91,6 +91,14 @@
 (attribute_name) @entity.other.attribute-name.perl
 (attribute_value) @string.quoted.double.perl
 
+; Prototypes are single scanner tokens, including their parentheses.
+((prototype) @punctuation.definition.expression.begin.bracket.round.perl
+  (#match? @punctuation.definition.expression.begin.bracket.round.perl "^\\(")
+  (#set! adjust.endAfterFirstMatchOf "^\\("))
+((prototype) @punctuation.definition.expression.end.bracket.round.perl
+  (#match? @punctuation.definition.expression.end.bracket.round.perl "\\)$")
+  (#set! adjust.startBeforeFirstMatchOf "\\)$"))
+
 (label) @entity.name.label.perl
 
 (statement_label label: _ @entity.name.label.perl)

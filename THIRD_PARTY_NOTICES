@@ -67,8 +67,8 @@ suitability for any purpose.
 
 ----- BEGIN THIRD-PARTY LICENSE: parser:tree-sitter-perl_tree-sitter-perl -----
 Source: https://github.com/tree-sitter-perl/tree-sitter-perl
-Commit: d0a9590e3150543032a3b1703fd082b3f4656e45
-Ref: d0a9590e3150543032a3b1703fd082b3f4656e45
+Commit: 80781e3dd98108199a3a1b5860f00fac22088b79
+Ref: 80781e3dd98108199a3a1b5860f00fac22088b79
 
 Original file: LICENSE
 
