@@ -70,6 +70,9 @@ Source: https://github.com/tree-sitter-perl/tree-sitter-perl
 Commit: 80781e3dd98108199a3a1b5860f00fac22088b79
 Ref: 80781e3dd98108199a3a1b5860f00fac22088b79
 
+Parser source: github:tree-sitter-perl/tree-sitter-perl#80781e3dd98108199a3a1b5860f00fac22088b79
+Resolved commit: 80781e3dd98108199a3a1b5860f00fac22088b79
+
 Original file: LICENSE
 
 Copyright 2025 Avishai "Veesh" Goldman
