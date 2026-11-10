@@ -1,0 +1,33 @@
+[
+  {
+    "name": "dollar-delimited patterns terminate before the following declaration",
+    "text": "my $re = qr$foo$;\nmy $tail = 1;\n",
+    "lastAssignment": "my $tail = 1"
+  },
+  {
+    "name": "labels before a closing brace or EOF",
+    "text": "sub f { INNER: }\nOUTER:",
+    "types": {
+      "statement_label": 2
+    }
+  },
+  {
+    "name": "empty while condition",
+    "text": "while () { last; }\n",
+    "types": {
+      "loop_statement": 1
+    }
+  },
+  {
+    "name": "prototype before attributes",
+    "text": "sub f ($) :lvalue;\n",
+    "types": {
+      "prototype": 1
+    }
+  },
+  {
+    "name": "sigils before hash remain literal",
+    "text": "my $s = \"a@#b\";\nmy $tail = 1;\n",
+    "lastAssignment": "my $tail = 1"
+  }
+]
