@@ -94,3 +94,40 @@ describe("Perl parenthesized calls", () => {
     });
   }
 });
+
+describe("Perl upstream quoted whitespace", () => {
+  const CASES = require("./fixtures/upstream-whitespace.json");
+  let editor;
+
+  beforeEach(async () => {
+    await lumine.packages.activatePackage("language-perl");
+    editor = await lumine.workspace.open();
+    editor.setGrammar(lumine.grammars.grammarForScopeName("source.perl"));
+  });
+
+  afterEach(() => editor?.destroy());
+
+  function check(test) {
+    const root = editor.getSyntaxNodeAtBufferPosition([0, 0], (node) => !node.parent);
+    expect(root.hasError).toBe(false);
+    expect(root.descendantsOfType("string_content").map((node) => node.text)).toEqual(
+      test.contents,
+    );
+  }
+
+  for (const test of CASES) {
+    it(test.name + " through incremental edits and undo", async () => {
+      editor.setText(test.text);
+      expect(await editor.whenGrammarSettled()).toBe(true);
+      check(test);
+      editor.getBuffer().clearUndoStack();
+      editor.getBuffer().append("my $upstream_tail = 99;\n");
+      expect(await editor.whenGrammarSettled()).toBe(true);
+      check(test);
+      editor.undo();
+      expect(await editor.whenGrammarSettled()).toBe(true);
+      expect(editor.getText()).toBe(test.text);
+      check(test);
+    });
+  }
+});

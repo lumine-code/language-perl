@@ -1,0 +1,17 @@
+[
+  {
+    "name": "whitespace-only strings retain their body",
+    "text": "\" \";\n' ';\nq{ };\nqq(\t);\n",
+    "contents": [" ", " ", " ", "\t"]
+  },
+  {
+    "name": "leading whitespace remains inside every quote form",
+    "text": "\" a\";\n' b';\nq{ c};\nqq(\td);\n",
+    "contents": [" a", " b", " c", "\td"]
+  },
+  {
+    "name": "whitespace outside a quote remains a token separator",
+    "text": "my $s = q {word};\nmy $after = 1;\n",
+    "contents": ["word"]
+  }
+]
