@@ -1,3 +1,32 @@
+; The parser now names unfinished quote openers. Preserve only their recovered
+; owners, and treat punctuation inside that payload as literal text, not code.
+([
+  (ERROR (unterminated_quote))
+  (ERROR (ERROR (unterminated_quote)))
+  (ERROR (assignment_expression right: (unterminated_quote)))
+  (assignment_expression (ERROR (unterminated_quote)))
+] @preserve
+  (#is? indent.reindent true)
+  (#is-not? indent.matchesCurrentRow startPosition)
+  (#set! indent.force true))
+
+([
+  (ERROR (unterminated_quote) ["(" ")" "[" "]" "{" "}"] @match.next)
+  (ERROR (ERROR (unterminated_quote)) ["(" ")" "[" "]" "{" "}"] @match.next)
+  (ERROR (assignment_expression right: (unterminated_quote)) ["(" ")" "[" "]" "{" "}"] @match.next)
+]
+  (#set! indent.match startPosition))
+
+; Inserting a newline can move the recovered payload into the immediately
+; following ERROR sibling while leaving the named opener in the assignment.
+((expression_statement (assignment_expression right: (unterminated_quote)))
+  . (ERROR) @preserve
+  (#is? indent.reindent true)
+  (#set! indent.force true))
+((expression_statement (assignment_expression right: (unterminated_quote)))
+  . (ERROR ["(" ")" "[" "]" "{" "}"] @match.next)
+  (#set! indent.match startPosition))
+
 ; Preserve a recovered literal opener without suppressing unrelated ERRORs.
 ; An opening quote operator may own unnamed payload through the error range.
 ((ERROR . (ERROR ["q" "qq" "qr"])) @preserve

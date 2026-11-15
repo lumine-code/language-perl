@@ -1,0 +1,102 @@
+[
+  {
+    "name": "unterminated quote - double",
+    "text": "my $x = \"abc;\nmy $y = 1;\n",
+    "tree": "(source_file (expression_statement (assignment_expression (variable_declaration (scalar (varname))) (unterminated_quote))) (ERROR) (expression_statement (assignment_expression (variable_declaration (scalar (varname))) (number))))"
+  },
+  {
+    "name": "unterminated quote - single",
+    "text": "foo('abc);\nmy $y = 1;\n",
+    "tree": "(source_file (expression_statement (function_call_expression (function) (unterminated_quote) (ERROR))) (expression_statement (assignment_expression (variable_declaration (scalar (varname))) (number))))"
+  },
+  {
+    "name": "unterminated quote - q()",
+    "text": "my $x = q(abc;\nmy $y = 1;\n",
+    "tree": "(source_file (expression_statement (assignment_expression (variable_declaration (scalar (varname))) (unterminated_quote))) (ERROR) (expression_statement (assignment_expression (variable_declaration (scalar (varname))) (number))))"
+  },
+  {
+    "name": "unterminated quote - qw with nesting",
+    "text": "my @x = qw( a (b) c;\nmy $y = 1;\n",
+    "tree": "(source_file (expression_statement (assignment_expression (variable_declaration (array (varname))) (ERROR (unterminated_quote) (function_call_expression (function) (bareword))) (bareword))) (expression_statement (assignment_expression (variable_declaration (scalar (varname))) (number))))"
+  },
+  {
+    "name": "unterminated quote - match",
+    "text": "if ($x =~ m{^foo) {\n  bar();\n}\n",
+    "tree": "(source_file (conditional_statement (binary_expression (binary_expression (scalar (varname)) (unterminated_quote)) (bareword)) (block (expression_statement (function_call_expression (function))))))"
+  },
+  {
+    "name": "unterminated quote - substitution pattern",
+    "text": "$x =~ s{foo;\nmy $y = 1;\n",
+    "tree": "(source_file (expression_statement (binary_expression (scalar (varname)) (unterminated_quote))) (ERROR) (expression_statement (assignment_expression (variable_declaration (scalar (varname))) (number))))"
+  },
+  {
+    "name": "unterminated quote - substitution replacement",
+    "text": "$x =~ s{a}{b;\nmy $y = 1;\n",
+    "tree": "(source_file (expression_statement (binary_expression (scalar (varname)) (substitution_regexp (regexp_content) (unterminated_quote)))) (ERROR) (expression_statement (assignment_expression (variable_declaration (scalar (varname))) (number))))"
+  },
+  {
+    "name": "unterminated quote - transliteration replacement",
+    "text": "$x =~ tr[a-z][A-Z;\nmy $y = 1;\n",
+    "tree": "(source_file (expression_statement (binary_expression (binary_expression (scalar (varname)) (transliteration_expression (transliteration_content) (unterminated_quote))) (ERROR) (bareword))) (expression_statement (assignment_expression (variable_declaration (scalar (varname))) (number))))"
+  },
+  {
+    "name": "unterminated quote - other delimiters still close",
+    "text": "my $x = q(abc;\nmy $y = \"ok\";\nmy $z = q[fine];\n",
+    "tree": "(source_file (expression_statement (assignment_expression (variable_declaration (scalar (varname))) (unterminated_quote))) (ERROR) (expression_statement (assignment_expression (variable_declaration (scalar (varname))) (interpolated_string_literal (string_content)))) (expression_statement (assignment_expression (variable_declaration (scalar (varname))) (string_literal (string_content)))))"
+  },
+  {
+    "name": "unterminated quote - same paired delimiter again",
+    "text": "my $x = q(abc;\nmy $y = q(closed);\nmy $z = q(open;\n",
+    "tree": "(source_file (expression_statement (assignment_expression (variable_declaration (scalar (varname))) (unterminated_quote))) (ERROR) (expression_statement (assignment_expression (variable_declaration (scalar (varname))) (string_literal (string_content)))) (expression_statement (assignment_expression (variable_declaration (scalar (varname))) (unterminated_quote))) (ERROR))"
+  },
+  {
+    "name": "unterminated quote - same character again",
+    "text": "my $x = 'abc;\nmy $y = 1;\n",
+    "tree": "(source_file (expression_statement (assignment_expression (variable_declaration (scalar (varname))) (unterminated_quote))) (ERROR) (expression_statement (assignment_expression (variable_declaration (scalar (varname))) (number))))"
+  },
+  {
+    "name": "unclosed quote - next string's opener is not a closer",
+    "text": "my $s = \"hello\nmy %h = (name => \"x\", size => \"y\");\nfoo(\"z\");\n",
+    "tree": "(source_file (expression_statement (assignment_expression (variable_declaration (scalar (varname))) (ERROR) (ambiguous_function_call_expression (function) (assignment_expression (variable_declaration (hash (varname))) (parenthesized_expression (list_expression (autoquoted_bareword) (interpolated_string_literal (string_content)) (autoquoted_bareword) (interpolated_string_literal (string_content)))))))) (expression_statement (function_call_expression (function) (interpolated_string_literal (string_content)))))"
+  },
+  {
+    "name": "unclosed quote - single quote before a later string",
+    "text": "my $s = 'hello\nprint 'a', 'b';\n",
+    "tree": "(source_file (expression_statement (assignment_expression (variable_declaration (scalar (varname))) (ERROR) (ambiguous_function_call_expression (function) (ambiguous_function_call_expression (function) (list_expression (string_literal (string_content)) (string_literal (string_content))))))))"
+  },
+  {
+    "name": "unclosed quote - both ends on one line",
+    "text": "is(\"@st, \"@lst\", \"check\");\nmy $y = 1;\n",
+    "tree": "(source_file (expression_statement (function_call_expression (function) (ERROR) (list_expression (array (varname)) (interpolated_string_literal (string_content (array (varname)))) (interpolated_string_literal (string_content))))) (expression_statement (assignment_expression (variable_declaration (scalar (varname))) (number))))"
+  },
+  {
+    "name": "unclosed quote - heredoc tag is not a closer",
+    "text": "my $s = \"hello\nprint <<\"EOT\";\nbody\nEOT\nmy $y = 1;\n",
+    "tree": "(source_file (expression_statement (assignment_expression (variable_declaration (scalar (varname))) (ERROR) (ambiguous_function_call_expression (function) (ambiguous_function_call_expression (function) (heredoc_token))))) (heredoc_content (heredoc_end)) (expression_statement (assignment_expression (variable_declaration (scalar (varname))) (number))))"
+  },
+  {
+    "name": "closed quote - multi-line string before a comma, a dot and a newline",
+    "text": "foo(\"a\nb\", \"c\nd\" . \"e\nf\"\n);\n",
+    "tree": "(source_file (expression_statement (function_call_expression (function) (list_expression (interpolated_string_literal (string_content)) (binary_expression (interpolated_string_literal (string_content)) (interpolated_string_literal (string_content)))))))"
+  },
+  {
+    "name": "closed quote - named operators and modifiers follow a string",
+    "text": "print \"a\"x3, \"b\" x 3, \"-\"x80;\nprint \"c\" if \"d\" eq \"e\" or \"f\" lt \"g\";\nprint \"h\" unless $x; print \"i\" for 1; print \"j\" foreach 1;\n$y = \"k\" isa Foo; $z = \"l\" cmp \"m\";\n",
+    "tree": "(source_file (expression_statement (ambiguous_function_call_expression (function) (list_expression (binary_expression (interpolated_string_literal (string_content)) (number)) (binary_expression (interpolated_string_literal (string_content)) (number)) (binary_expression (interpolated_string_literal (string_content)) (number))))) (expression_statement (postfix_conditional_expression (ambiguous_function_call_expression (function) (interpolated_string_literal (string_content))) (lowprec_logical_expression (equality_expression (interpolated_string_literal (string_content)) (interpolated_string_literal (string_content))) (relational_expression (interpolated_string_literal (string_content)) (interpolated_string_literal (string_content)))))) (expression_statement (postfix_conditional_expression (ambiguous_function_call_expression (function) (interpolated_string_literal (string_content))) (scalar (varname)))) (expression_statement (postfix_for_expression (ambiguous_function_call_expression (function) (interpolated_string_literal (string_content))) (number))) (expression_statement (postfix_for_expression (ambiguous_function_call_expression (function) (interpolated_string_literal (string_content))) (number))) (expression_statement (assignment_expression (scalar (varname)) (relational_expression (interpolated_string_literal (string_content)) (bareword)))) (expression_statement (assignment_expression (scalar (varname)) (equality_expression (interpolated_string_literal (string_content)) (interpolated_string_literal (string_content))))))"
+  },
+  {
+    "name": "closed quote - glued operators on one line",
+    "text": "my $x = $c ? \"a\":\"b\";\nmy $o = \"Foo\"->new(\"a\".\"b\");\nmy $y = \"a\"x2 . '\"';\n",
+    "tree": "(source_file (expression_statement (assignment_expression (variable_declaration (scalar (varname))) (conditional_expression (scalar (varname)) (interpolated_string_literal (string_content)) (interpolated_string_literal (string_content))))) (expression_statement (assignment_expression (variable_declaration (scalar (varname))) (method_call_expression (interpolated_string_literal (string_content)) (method) (binary_expression (interpolated_string_literal (string_content)) (interpolated_string_literal (string_content)))))) (expression_statement (assignment_expression (variable_declaration (scalar (varname))) (binary_expression (binary_expression (interpolated_string_literal (string_content)) (number)) (string_literal (string_content))))))"
+  },
+  {
+    "name": "closed quote - quote-like operators keep their flags and second part",
+    "text": "my $r = qr'^abc$'i;\n$x =~ m'a'x;\n$x =~ s'a'b'g;\n",
+    "tree": "(source_file (expression_statement (assignment_expression (variable_declaration (scalar (varname))) (quoted_regexp (regexp_content) (quoted_regexp_modifiers)))) (expression_statement (binary_expression (scalar (varname)) (match_regexp (regexp_content) (match_regexp_modifiers)))) (expression_statement (binary_expression (scalar (varname)) (substitution_regexp (regexp_content) (replacement) (substitution_regexp_modifiers)))))"
+  },
+  {
+    "name": "closed quote - multi-line string then a spaced operator word",
+    "text": "my $s = \"a\nb\" x 3;\n",
+    "tree": "(source_file (expression_statement (assignment_expression (variable_declaration (scalar (varname))) (binary_expression (interpolated_string_literal (string_content)) (number)))))"
+  }
+]
