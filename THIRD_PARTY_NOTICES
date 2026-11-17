@@ -82,6 +82,9 @@ Resolved commit: 5e30b919b86ea7dfbf8525537e1523af235e140d
 Parser source: github:tree-sitter-perl/tree-sitter-perl#296529439e8a26fd108ecbcbee510643f1ef59ad
 Resolved commit: 296529439e8a26fd108ecbcbee510643f1ef59ad
 
+Parser source: github:tree-sitter-perl/tree-sitter-perl#733ca39d0a69c660669f415b929c21a54bedc4fc
+Resolved commit: 733ca39d0a69c660669f415b929c21a54bedc4fc
+
 Original file: LICENSE
 
 Copyright 2025 Avishai "Veesh" Goldman
