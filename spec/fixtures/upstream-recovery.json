@@ -98,5 +98,15 @@
     "name": "closed quote - multi-line string then a spaced operator word",
     "text": "my $s = \"a\nb\" x 3;\n",
     "tree": "(source_file (expression_statement (assignment_expression (variable_declaration (scalar (varname))) (binary_expression (interpolated_string_literal (string_content)) (number)))))"
+  },
+  {
+    "name": "closed quote - multiline ternary with adjacent operators",
+    "text": "my $label = $active ? \"first\nsecond\":\"third\nfourth\";\n",
+    "tree": "(source_file (expression_statement (assignment_expression (variable_declaration (scalar (varname))) (conditional_expression (scalar (varname)) (interpolated_string_literal (string_content)) (interpolated_string_literal (string_content))))))"
+  },
+  {
+    "name": "closed quote - multiline string followed by adjacent repetition",
+    "text": "my $repeat = \"red\nblue\"x3;\n",
+    "tree": "(source_file (expression_statement (assignment_expression (variable_declaration (scalar (varname))) (binary_expression (interpolated_string_literal (string_content)) (number)))))"
   }
 ]

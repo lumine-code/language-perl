@@ -16,7 +16,7 @@
     "start": "# "
   },
   "treeSitter": {
-    "parserSource": "github:tree-sitter-perl/tree-sitter-perl#9f8b11ac2d0edf8430563fcd96b9dcab4c700164",
+    "parserSource": "github:tree-sitter-perl/tree-sitter-perl#b5093852a9403eefd1ff87ea932bae141737d57c",
     "wasmBuildTool": "tree-sitter-cli#v0.27.2",
     "grammar": "perl.wasm",
     "tagsQuery": "perl-tags.scm",
