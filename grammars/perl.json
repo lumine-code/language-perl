@@ -19,6 +19,7 @@
     "parserSource": "github:tree-sitter-perl/tree-sitter-perl#b5093852a9403eefd1ff87ea932bae141737d57c",
     "wasmBuildTool": "tree-sitter-cli#v0.27.2",
     "grammar": "perl.wasm",
+    "tagsQuerySupportsLocalPath": true,
     "tagsQuery": "perl-tags.scm",
     "highlightsQuery": "perl-highlights.scm",
     "foldsQuery": "perl-folds.scm",
